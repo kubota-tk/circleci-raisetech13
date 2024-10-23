@@ -83,7 +83,7 @@ Resources:
         - 0
         - Fn::GetAZs: ""
       CidrBlock: !Ref PublicSubnetACIDR
-      VpcId: !Ref VPC		
+      VpcId: !Ref VPC
       Tags:
         - Key: Name
           Value: !Sub ${ProjectName}-PubSubA
