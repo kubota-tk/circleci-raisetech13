@@ -4,38 +4,38 @@ Description: SecurityGroups for RaiseTech-Lecture10
 
 ## Parametersの作成 ##
 
-Parameters:             
+Parameters:
   ProjectName:
-    Type: String        
-    Description: Project Name		
+    Type: String
+    Description: Project Name
     Default: RaiseTech-Lec10
   
-  MyIP:                                                 
-    Description: IP address allowed to access EC2(SSH)	
-    Type: String					
+  MyIP:                           
+    Description: IP address allowed to access EC2(SSH)
+    Type: String	
 
-Resources: 
+Resources:
 
 ## EC2のSecurityGroupを作成　##
 
   EC2SecurityGroup:
-    Type: AWS::EC2::SecurityGroup	
+    Type: AWS::EC2::SecurityGroup
     Properties:
-      GroupName: !Sub ${ProjectName}-ec2-sg	
-      GroupDescription:  Allow connections from SSH and ALB	
-      VpcId:  !ImportValue VPCID	（vpc.yaml）
-      SecurityGroupIngress:             
-        - IpProtocol: tcp		#22番ポートでのMY IPアドレスによる受信を許可する(SSH)
+      GroupName: !Sub ${ProjectName}-ec2-sg
+      GroupDescription:  Allow connections from SSH and ALB
+      VpcId:  !ImportValue VPCID
+      SecurityGroupIngress:        
+        - IpProtocol: tcp
           Fromport: 22
           Toport: 22
-          CidrIp: 0.0.0.0/0             #Circleci無料版の仕様のため、全てのIP許可とする
-        - IpProtocol: tcp		#80番ポートでのALBからの受信を許可する(HTTP)
+          CidrIp: 0.0.0.0/0  #Circleci無料版の仕様のため、全てのIP許可とする
+        - IpProtocol: tcp    #80番ポートでのALBからの受信を許可する(HTTP)
           Fromport: 80
           Toport: 80
-          SourceSecurityGroupId: !Ref ALBSecurityGroup	#ALBSecurityGroupを通信元として指定
-      SecurityGroupEgress:      #EC2インスタンスのセキュリティグループ（アウトバウンド）
-        - IpProtocol: -1	#全てのプロトコルを許可
-          CidrIp: 0.0.0.0/0    	#全てのIPを許可
+          SourceSecurityGroupId: !Ref ALBSecurityGroup
+      SecurityGroupEgress:
+        - IpProtocol: -1
+          CidrIp: 0.0.0.0/0
       Tags:
         - Key: Name
           Value: !Sub ${ProjectName}-ec2-sg
@@ -69,7 +69,7 @@ Resources:
         - IpProtocol: tcp
           Fromport: 80
           Toport: 80
-          CidrIp: 0.0.0.0/0             #Circleci無料版の仕様のため、全てのIP許可とする
+          CidrIp: 0.0.0.0/0  #Circleci無料版の仕様のため、全てのIP許可とする
       SecurityGroupEgress:
         - IpProtocol: -1
           CidrIp: 0.0.0.0/0
@@ -96,4 +96,5 @@ Outputs:
     Description: ALBSecurityGroup ID
     Value: !Ref ALBSecurityGroup
     Export: 
-      Name: ALB-SG-ID  
+      Name: ALB-SG-ID
+

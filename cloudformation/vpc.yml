@@ -25,7 +25,7 @@ Metadata:
 
 Parameters:      
   ProjectName:
-    Type: String	
+    Type: String
     Description: Project Name
     Default: RaiseTech-Lec10
   VPCCIDR:
@@ -52,25 +52,25 @@ Resources:
   VPC:
     Type: AWS::EC2::VPC
     Properties:
-      CidrBlock: !Ref VPCCIDR	
-      EnableDnsSupport: true	
-      EnableDnsHostnames: true	
+      CidrBlock: !Ref VPCCIDR
+      EnableDnsSupport: true
+      EnableDnsHostnames: true
       Tags:
         - Key: Name
-          Value: !Sub ${ProjectName}-vpc	
+          Value: !Sub ${ProjectName}-vpc
 
 ## InternetGatewayの作成 ##
 
-  InternetGateway: 
-    Type: AWS::EC2::InternetGateway	
-    Properties: 
-      Tags: 
+  InternetGateway:
+    Type: AWS::EC2::InternetGateway
+    Properties:
+      Tags:
         - Key: Name
           Value: !Sub ${ProjectName}-igw
 
-  InternetGatewayAttachment: 
-    Type: AWS::EC2::VPCGatewayAttachment	
-    Properties: 
+  InternetGatewayAttachment:
+    Type: AWS::EC2::VPCGatewayAttachment
+    Properties:
       InternetGatewayId: !Ref InternetGateway
       VpcId: !Ref VPC
 
@@ -79,11 +79,11 @@ Resources:
   PublicSubnetA:
     Type: AWS::EC2::Subnet
     Properties:
-      AvailabilityZone: !Select          
-        - 0                              
-        - Fn::GetAZs: ""                 
-      CidrBlock: !Ref PublicSubnetACIDR		
-      VpcId: !Ref VPC				
+      AvailabilityZone: !Select
+        - 0
+        - Fn::GetAZs: ""
+      CidrBlock: !Ref PublicSubnetACIDR
+      VpcId: !Ref VPC		
       Tags:
         - Key: Name
           Value: !Sub ${ProjectName}-PubSubA
@@ -128,7 +128,7 @@ Resources:
 ## RouteTableの作成 ##
 
   PublicRouteTable:
-    Type: AWS::EC2::RouteTable	#Publicサブネット用のルートテーブル
+    Type: AWS::EC2::RouteTable
     Properties:
       VpcId: !Ref VPC
       Tags:
@@ -136,7 +136,7 @@ Resources:
           Value: !Sub ${ProjectName}-PublicRouteTable
 
   PrivateRouteTable1:
-    Type: AWS::EC2::RouteTable  
+    Type: AWS::EC2::RouteTable
     Properties:
       VpcId: !Ref VPC
       Tags:
@@ -144,7 +144,7 @@ Resources:
           Value: !Sub ${ProjectName}-PrivateRouteTable1
 
   PrivateRouteTable2:
-    Type: AWS::EC2::RouteTable  
+    Type: AWS::EC2::RouteTable
     Properties:
       VpcId: !Ref VPC
       Tags:
@@ -152,7 +152,7 @@ Resources:
           Value: !Sub ${ProjectName}-PrivateRouteTable2
 
   PublicRoute:
-    Type: AWS::EC2::Route	
+    Type: AWS::EC2::Route
     Properties:
       RouteTableId: !Ref PublicRouteTable
       DestinationCidrBlock: 0.0.0.0/0
@@ -161,7 +161,7 @@ Resources:
 
 ## Associate Routetable with Subnet　##
 
-  PublicSubnetRouteATableAssociation:           
+  PublicSubnetRouteATableAssociation:       
     Type: AWS::EC2::SubnetRouteTableAssociation
     Properties:
       SubnetId: !Ref PublicSubnetA
@@ -188,18 +188,18 @@ Resources:
 ## Outputsの作成 ##
 Outputs: 
   vpcId: 
-    Value: !Ref VPC     
-    Export: 
-      Name: VPCID       	
+    Value: !Ref VPC
+    Export:
+      Name: VPCID
 
   PublicSubnetAId:
     Value: !Ref PublicSubnetA
-    Export: 
+    Export:
       Name: Pub-SubA-ID
 
   PublicSubnetCId:
     Value: !Ref PublicSubnetC
-    Export: 
+    Export:
       Name: Pub-SubC-ID
 
   PrivateSubnetAId:

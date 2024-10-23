@@ -7,17 +7,17 @@ Description: EC2,RDS,ALB and S3 for RaiseTech-Lecture10
 Metadata:  
   AWS::CloudFormation::Interface:
     ParameterGroups:
-      - Label:  
+      - Label:
           default: Environment Setting
         Parameters:
           - ProjectName
       - Label:
           default: Amazon EC2 Config
-        Parameters:  
+        Parameters:
           - KeyName
       - Label:
           default: RDS Config
-        Parameters:  
+        Parameters:
           - DBEngineName
           - MySQLMajorVersion
           - MySQLMinorVersion
@@ -30,81 +30,81 @@ Metadata:
 
 ##　Parametersの作成　##
 
-Parameters:  
+Parameters:
   ProjectName:
-    Type: String  
+    Type: String
     Description: project name
     Default: RaiseTech-Lec10
 ##---EC2---##
-  KeyName:  
+  KeyName:
     Description: The EC2 Key Pair to allow SSH access to the instance
-    Type: AWS::EC2::KeyPair::KeyName  
+    Type: AWS::EC2::KeyPair::KeyName
 ##---RDS---##
-  DBEngineName: 
+  DBEngineName:
     Description: Input DB Engine Name
     Type: String
-    Default: mysql       
-  MySQLMajorVersion:   
+    Default: mysql
+  MySQLMajorVersion:
     Description: Input DB Major Version
     Type: String
-    Default: 8.0   
-  MySQLMinorVersion:   
+    Default: 8.0
+  MySQLMinorVersion:
     Description: Input DB Minor Version
-    Type: String	
-    Default: 36	    
-  DBInstanceClass:    
     Type: String
-    Default: "db.t3.micro"   
-  DBInstanceStorageSize:   
+    Default: 36    
+  DBInstanceClass:
     Type: String
-    Default: "20"   
-  DBInstanceStorageType:   
+    Default: "db.t3.micro"
+  DBInstanceStorageSize: 
     Type: String
-    Default: "gp2"   
-  DBName:   
+    Default: "20"
+  DBInstanceStorageType:
+    Type: String
+    Default: "gp2"
+  DBName:
     Description: DB Name
     Type: String
-    Default: RaiseTechLec10db 
+    Default: RaiseTechLec10db
   DBMasterUserName:
     Description: RDS Maseter User Name
     Type: String
-    Default: admin   
-  DBPassword:   
-    Description: RDS Password 
+    Default: admin
+  DBPassword:
+    Description: RDS Password
     Type: String
-    NoEcho: true   
-    MinLength: 8   
+    NoEcho: true
+    MinLength: 8
    
 Resources:
 
-## EC2 Instanceの作成 ##   
+## EC2 Instanceの作成 ##
 
  EC2Instance:
     Type: AWS::EC2::Instance
     Properties:
-      ImageId: ami-031ff5a575101728a   
-      KeyName: !Ref KeyName   
-      InstanceType: t2.micro   
-      NetworkInterfaces:   
-        - AssociatePublicIpAddress: "true"  
-          DeviceIndex: "0"      
-          SubnetId: !ImportValue Pub-SubA-ID   （security.yaml）
-          GroupSet: 
-            - !ImportValue EC2-SG-ID   （security.yaml）
-      BlockDeviceMappings:    
-        - DeviceName: /dev/xvda  
-          Ebs:   
+      ImageId: ami-031ff5a575101728a
+      KeyName: !Ref KeyName
+      InstanceType: t2.micro
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: "true"
+          DeviceIndex: "0"
+          SubnetId: !ImportValue Pub-SubA-ID
+          GroupSet:
+            - !ImportValue EC2-SG-ID
+      BlockDeviceMappings:
+        - DeviceName: /dev/xvda
+          Ebs:
             VolumeSize: 8
             VolumeType: gp2
-            DeleteOnTermination: true   
-      IamInstanceProfile: !Ref S3AccessInstanceProfile  
+            DeleteOnTermination: true
+      IamInstanceProfile: !Ref S3AccessInstanceProfile
       Tags:
         - Key: Name
           Value: !Sub ${ProjectName}-ec2
 ## ユーザーデータ ##
-      UserData: !Base64 |  
-        #!/bin/bash	
-        yum install git -y   
+      UserData: !Base64 |
+        #!/bin/bash
+        yum install git -y
         yum install mysql -y
 
 
@@ -112,53 +112,53 @@ Resources:
 
  DBInstance:
     Type: AWS::RDS::DBInstance
-    Properties: 
-      DBInstanceIdentifier: !Sub ${ProjectName}-rds 
-      Engine: !Ref DBEngineName   
+    Properties:
+      DBInstanceIdentifier: !Sub ${ProjectName}-rds
+      Engine: !Ref DBEngineName
       EngineVersion: !Sub ${MySQLMajorVersion}.${MySQLMinorVersion}
-      DBInstanceClass: !Ref DBInstanceClass   
-      AvailabilityZone: !Select   
-      - 0   #東京リージョンの場合、0=~1a、1=~1c、2=~1d
-      - Fn::GetAZs: !Ref AWS::Region   
-      AllocatedStorage: !Ref DBInstanceStorageSize    
-      StorageType: !Ref DBInstanceStorageType    
-      DBName: !Ref DBName    
-      MasterUsername: !Ref DBMasterUserName    
-      MasterUserPassword: !Ref DBPassword    
-      DBSubnetGroupName: !Ref DBSubnetGroup    
-      PubliclyAccessible: false     
-      MultiAZ: false    
-      AutoMinorVersionUpgrade: false    
-      DBParameterGroupName: !Ref DBParameterGroup       
+      DBInstanceClass: !Ref DBInstanceClass
+      AvailabilityZone: !Select
+      - 0
+      - Fn::GetAZs: !Ref AWS::Region
+      AllocatedStorage: !Ref DBInstanceStorageSize
+      StorageType: !Ref DBInstanceStorageType
+      DBName: !Ref DBName
+      MasterUsername: !Ref DBMasterUserName
+      MasterUserPassword: !Ref DBPassword
+      DBSubnetGroupName: !Ref DBSubnetGroup
+      PubliclyAccessible: false
+      MultiAZ: false
+      AutoMinorVersionUpgrade: false
+      DBParameterGroupName: !Ref DBParameterGroup
       VPCSecurityGroups:
-        - !ImportValue RDS-SG-ID       
-      BackupRetentionPeriod: 7    
-      Tags: 
+        - !ImportValue RDS-SG-ID
+      BackupRetentionPeriod: 7
+      Tags:
         - Key: Name
-          Value: !Sub ${ProjectName}-rds 
+          Value: !Sub ${ProjectName}-rds
 
 ## DB ParameterGroupを作成 ##
 
- DBParameterGroup:   
+ DBParameterGroup:
     Type: AWS::RDS::DBParameterGroup
     Properties:
       DBParameterGroupName: !Sub ${ProjectName}-db-parametergp
       Description: MySQL Parameter Group
-      Family: !Sub MySQL${MySQLMajorVersion}	
+      Family: !Sub MySQL${MySQLMajorVersion}
       Tags:
         - Key: Name
           Value: !Sub ${ProjectName}-db-parametergp
 
 ## DB SubnetGroupの作成 ##
 
- DBSubnetGroup:   
+ DBSubnetGroup:
     Type: AWS::RDS::DBSubnetGroup
-    Properties: 
+    Properties:
       DBSubnetGroupName: !Sub ${ProjectName}-db-subnetgp
       DBSubnetGroupDescription: DBSubnetGroup
-      SubnetIds: 
-        - !ImportValue Pri-SubA-ID    
-        - !ImportValue Pri-SubC-ID    
+      SubnetIds:
+        - !ImportValue Pri-SubA-ID
+        - !ImportValue Pri-SubC-ID
       Tags:
         - Key: Name
           Value: !Sub ${ProjectName}-db-subnetgp
@@ -170,41 +170,41 @@ Resources:
     Type: AWS::ElasticLoadBalancingV2::LoadBalancer
     Properties:
       Name: !Sub ${ProjectName}-alb
-      Scheme: internet-facing    
-      Type: application	     
+      Scheme: internet-facing
+      Type: application
       IpAddressType: ipv4
-      SecurityGroups: 
-        - !ImportValue ALB-SG-ID  
-      Subnets: 
-        - !ImportValue Pub-SubA-ID   
+      SecurityGroups:
+        - !ImportValue ALB-SG-ID
+      Subnets:
+        - !ImportValue Pub-SubA-ID
         - !ImportValue Pub-SubC-ID
-      Tags: 
+      Tags:
         - Key: Name
           Value: !Sub ${ProjectName}-alb
 
 ## TargetGroup ALB ##
 
  TargetGroup:
-    Type: AWS::ElasticLoadBalancingV2::TargetGroup    
+    Type: AWS::ElasticLoadBalancingV2::TargetGroup
     Properties:
       Name: !Sub ${ProjectName}-alb-tg
       VpcId: !ImportValue VPCID
       IpAddressType: ipv4
       Protocol: HTTP
-      ProtocolVersion: HTTP1    
+      ProtocolVersion: HTTP1
       Port: 80
-      TargetType: instance      
-      Targets: 
+      TargetType: instance
+      Targets:
       - Id: !Ref EC2Instance
-      HealthCheckEnabled: true     
-      HealthCheckIntervalSeconds: 30  
-      HealthCheckPath: /           
-      HealthCheckPort: traffic-port   
+      HealthCheckEnabled: true
+      HealthCheckIntervalSeconds: 30
+      HealthCheckPath: /
+      HealthCheckPort: traffic-port
       HealthCheckProtocol: HTTP
-      HealthCheckTimeoutSeconds: 5    
-      HealthyThresholdCount: 5        
-      UnhealthyThresholdCount: 2      
-      Matcher:                        
+      HealthCheckTimeoutSeconds: 5
+      HealthyThresholdCount: 5
+      UnhealthyThresholdCount: 2
+      Matcher:
         HttpCode: 200
       Tags:
       - Key: Name
@@ -212,14 +212,14 @@ Resources:
 
 ## Listener(ALB) ##
 
- Listener:   #外部からのアクセス設定
+ Listener:
     Type: AWS::ElasticLoadBalancingV2::Listener
     Properties:
       LoadBalancerArn: !Ref ALB
       Port: 80
       Protocol: HTTP
-      DefaultActions: 
-      - Type: forward  
+      DefaultActions:
+      - Type: forward
         TargetGroupArn: !Ref TargetGroup
 
 ## S3 ##
@@ -227,22 +227,21 @@ Resources:
  S3Bucket:
     Type: AWS::S3::Bucket
     Properties:
-      BucketName: raisetech-lec10-s3-bucket 
-##BucketName: !Sub ${ProjectName}-s3-bucket
-      PublicAccessBlockConfiguration: 
+      BucketName: raisetech-lec10-s3-bucket
+      PublicAccessBlockConfiguration:
           BlockPublicAcls: true
           BlockPublicPolicy: true
           IgnorePublicAcls: true
           RestrictPublicBuckets: true
-      BucketEncryption:                         
-        ServerSideEncryptionConfiguration:      
-          - ServerSideEncryptionByDefault: 
-              SSEAlgorithm: AES256              
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: AES256
 
 ## IAM Policy ##
 
  S3AccessPolicy:
-    Type: AWS::IAM::ManagedPolicy  
+    Type: AWS::IAM::ManagedPolicy
     Properties:
       ManagedPolicyName: !Sub ${ProjectName}-s3acsecc-policy
       PolicyDocument:
@@ -254,7 +253,7 @@ Resources:
               - s3:PutObject
               - s3:ListBucket
               - s3:DeleteObject
-            Resource: 
+            Resource:
               - !Sub arn:aws:s3:::${S3Bucket}
               - !Sub arn:aws:s3:::${S3Bucket}/*
 
@@ -265,21 +264,21 @@ Resources:
     Properties:
       RoleName: !Sub ${ProjectName}-ec2-role
       Path: /
-      AssumeRolePolicyDocument: 
+      AssumeRolePolicyDocument:
         Version: "2012-10-17"
         Statement:
           Effect: "Allow"
-          Principal:  #Roleを引き受ける者、serviceにかかる（ec2.amazonaws.com）
-            Service: 
-              - "ec2.amazonaws.com"  
-          Action: 
+          Principal:
+            Service:
+              - "ec2.amazonaws.com"
+          Action:
             - "sts:AssumeRole"
-      ManagedPolicyArns:   #AWSマネージドポリシーのアマゾンリソースネーム
+      ManagedPolicyArns:
         - !Ref S3AccessPolicy
 
 ## IAM InstanceProflie ##
  S3AccessInstanceProfile:
-    Type: AWS::IAM::InstanceProfile     
+    Type: AWS::IAM::InstanceProfile
     Properties:
       InstanceProfileName: !Sub ${ProjectName}-instanceprofile
       Path: "/"
@@ -290,8 +289,9 @@ Resources:
 Outputs:
  ALBDNSName:
     Description: DNS-Name of ALB
-    Value:  !GetAtt ALB.DNSName        
+    Value:  !GetAtt ALB.DNSName
 
  RDSEndpoint:
     Description: Endpoint of RDS-Instance
-    Value:  !GetAtt DBInstance.Endpoint.Address	
+    Value:  !GetAtt DBInstance.Endpoint.Address
+
