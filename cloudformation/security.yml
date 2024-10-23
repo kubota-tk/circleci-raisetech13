@@ -12,7 +12,7 @@ Parameters:
   
   MyIP:                           
     Description: IP address allowed to access EC2(SSH)
-    Type: String	
+    Type: String
 
 Resources:
 
