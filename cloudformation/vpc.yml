@@ -15,11 +15,10 @@ Metadata:
           default: Network Configuration
         Parameters:
           - VPCCIDR　#VPCのCDIR(デフォルト値は以下で指定)
-          - PublicSubnetACIDR   
-          - PublicSubnetCCIDR	
-          - PrivateSubnetACIDR	
-          - PrivateSubnetCCIDR	
-
+          - PublicSubnetACIDR
+          - PublicSubnetCCIDR
+          - PrivateSubnetACIDR
+          - PrivateSubnetCCIDR
 
 
 ## Parametersの作成 ##
