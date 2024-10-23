@@ -2,18 +2,6 @@ AWSTemplateFormatVersion: 2010-09-09
 
 Description: SecurityGroups for RaiseTech-Lecture10
 
-## Parametersの作成 ##
-
-Parameters:
-  ProjectName:
-    Type: String
-    Description: Project Name
-    Default: RaiseTech-Lec10
-  
-  MyIP:                           
-    Description: IP address allowed to access EC2(SSH)
-    Type: String
-
 Resources:
 
 ## EC2のSecurityGroupを作成　##
