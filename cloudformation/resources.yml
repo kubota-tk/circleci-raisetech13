@@ -75,7 +75,7 @@ Parameters:
     Type: String
     NoEcho: true
     MinLength: 8
-    Default: ''
+    Default: XXXXXXXX
    
 Resources:
 
