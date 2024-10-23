@@ -2,10 +2,10 @@ AWSTemplateFormatVersion: 2010-09-09
 
 Description: SecurityGroups for RaiseTech-Lecture10
 
-Parameters:             
+Parameters:        
   ProjectName:
-    Type: String        
-    Description: Project Name		
+    Type: String
+    Description: Project Name
     Default: RaiseTech-Lec10
 
 Resources:
