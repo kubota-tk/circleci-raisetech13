@@ -118,7 +118,7 @@ Resources:
 ## ElasticIPをEC2に割り当て##
  IPAssos:
    Type: AWS::EC2::EIPAssociation
-   Properties
+   Properties:
      EIP: !Ref ElasticIP 
      InstanceId: !Ref EC2Instance
 
