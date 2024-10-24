@@ -119,7 +119,7 @@ Resources:
  IPAssos:
    Type: AWS::EC2::EIPAssociation
    Properties
-     EIP: !Ref ElasticIP
+     EIP: !Ref ElasticIP 
      InstanceId: !Ref EC2Instance
 
 
