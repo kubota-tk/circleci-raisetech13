@@ -1,0 +1,10 @@
+---
+- hosts: 35.75.114.95
+  become: yes
+  task:
+    - name: Install git
+      yum:
+        state: present
+        lock_timeout: 180
+
+
