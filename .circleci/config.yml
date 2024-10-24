@@ -20,7 +20,7 @@ jobs:
             aws cloudformation deploy --template cloudformation/vpc.yml --stack-name CircleCI-lec13-vpc
             aws cloudformation deploy --template cloudformation/security.yml --stack-name CircleCI-lec13-security
             aws cloudformation deploy --template cloudformation/resources.yml --stack-name CircleCI-lec13-resources --capabilities CAPABILITY_NAMED_IAM
-
+  execute-ansible:
     executor: ansible-playbook/default
     steps:
       - checkout
