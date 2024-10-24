@@ -1,6 +1,6 @@
 AWSTemplateFormatVersion: "2010-09-09"
 
-Description: EC2,RDS,ALB and S3 for RaiseTech-Lecture10
+Description: EC2,RDS,ALB and S3 for RaiseTech-Lecture13
 
 ## Metadataの作成 ##
 
@@ -34,12 +34,12 @@ Parameters:
   ProjectName:
     Type: String
     Description: project name
-    Default: RaiseTech-Lec10
+    Default: RaiseTech-Lec13
 ##---EC2---##
   KeyName:
     Description: The EC2 Key Pair to allow SSH access to the instance
     Type: AWS::EC2::KeyPair::KeyName
-    Default: lec10-keypair
+    Default: lec13-keypair
 ##---RDS---##
   DBEngineName:
     Description: Input DB Engine Name
@@ -65,7 +65,7 @@ Parameters:
   DBName:
     Description: DB Name
     Type: String
-    Default: RaiseTechLec10db
+    Default: RaiseTechLec13db
   DBMasterUserName:
     Description: RDS Maseter User Name
     Type: String
@@ -229,7 +229,7 @@ Resources:
  S3Bucket:
     Type: AWS::S3::Bucket
     Properties:
-      BucketName: raisetech-lec10-s3-bucket
+      BucketName: raisetech-lec13-s3-bucket
       PublicAccessBlockConfiguration:
           BlockPublicAcls: true
           BlockPublicPolicy: true

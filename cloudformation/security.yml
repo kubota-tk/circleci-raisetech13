@@ -1,17 +1,17 @@
 AWSTemplateFormatVersion: 2010-09-09
 
-Description: SecurityGroups for RaiseTech-Lecture10
+Description: SecurityGroups for RaiseTech-Lecture13
 
 Parameters:        
   ProjectName:
     Type: String
     Description: Project Name
-    Default: RaiseTech-Lec10
+    Default: RaiseTech-Lec13
 
   MyIP:
     Description: IP address allowed to access EC2(SSH)
     Type: String
-    Default: 106.154.152.101/32
+    Default: 106.155.3.141/32
 
 Resources:
 

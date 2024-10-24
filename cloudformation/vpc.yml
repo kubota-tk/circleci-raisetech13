@@ -1,6 +1,6 @@
 AWSTemplateFormatVersion: "2010-09-09"
 
-Description: VPC and subnets for RaiseTech-Lecture10
+Description: VPC and subnets for RaiseTech-Lecture13
 
 
 ## Metadataの作成 ##
@@ -27,7 +27,7 @@ Parameters:
   ProjectName:
     Type: String
     Description: Project Name
-    Default: RaiseTech-Lec10
+    Default: RaiseTech-Lec13
   VPCCIDR:
     Type: String
     Default: 10.1.0.0/16
