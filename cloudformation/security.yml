@@ -8,11 +8,6 @@ Parameters:
     Description: Project Name
     Default: RaiseTech-Lec13
 
-  MyIP:
-    Description: IP address allowed to access EC2(SSH)
-    Type: String
-    Default: 106.155.3.141/32
-
 Resources:
 
 ## EC2のSecurityGroupを作成　##

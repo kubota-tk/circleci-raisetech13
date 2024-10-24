@@ -109,6 +109,19 @@ Resources:
         yum install git -y
         yum install mysql -y
 
+## ElasticIPの作成##
+ ElasticIP:
+   Type: AWS::EC2::EIP
+   Properties:
+     Domain: vpc
+
+## ElasticIPをEC2に割り当て##
+ IPAssos:
+   Type: AWS::EC2::EIPAssociation
+   Properties:
+     EIP: !Ref ElasticIP 
+     InstanceId: !Ref EC2Instance
+
 
 ## RDS Instanceの作成 ##
 

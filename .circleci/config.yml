@@ -2,6 +2,7 @@ version: 2.1
 
 orbs:
   aws-cli: circleci/aws-cli@5.1.0
+  ansible-playbook: orbss/ansible-playbook@0.0.5
 
 jobs:
   execute-cloudformation:
@@ -19,10 +20,22 @@ jobs:
             aws cloudformation deploy --template cloudformation/vpc.yml --stack-name CircleCI-lec13-vpc
             aws cloudformation deploy --template cloudformation/security.yml --stack-name CircleCI-lec13-security
             aws cloudformation deploy --template cloudformation/resources.yml --stack-name CircleCI-lec13-resources --capabilities CAPABILITY_NAMED_IAM
-
+  execute-ansible:
+    executor: ansible-playbook/default
+    steps:
+      - checkout
+      - add_ssh_keys:
+          fingerprints:
+            - "SHA256:KmebBzMw0nhELVCkE1BHo6QJLls6fEfwjimMB2yKLN0"
+      - ansible-playbook/install:
+          version: 2.10.7
 
 workflows:
   circleci-raisetech13-workflow:
     jobs:
       - execute-cloudformation
+      - execute-ansible:
+          requires:
+            - execute-cloudformation
+
 
