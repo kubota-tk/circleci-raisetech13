@@ -91,7 +91,7 @@
           become: false
           gem:
             name: bundler
-            user_install: 
+            user_install: no
             state: present
             executable: "/home/ec2-user/.rbenv/shims/gem"   
 
