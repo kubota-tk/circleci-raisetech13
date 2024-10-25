@@ -90,7 +90,7 @@
       block:
         - name: Clone nvm repository
           git:
-            repo: https://github.com/creationix/nvm.git
+            repo: https://github.com/nvm-sh/nvm.git           
             dest: /home/ec2-user/.nvm
 
         - name: Update .bashrc for nvm
