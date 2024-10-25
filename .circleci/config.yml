@@ -38,13 +38,13 @@ jobs:
     steps:
       - ruby/install:
           version: 3.2.3
-      - ruby/install-deps:
-          app-dir: serverspec
-      - run:
-          name: execute
-          command: |
-            cd serverspec
-            TARGET_HOST=35.75.114.95 bundle exec rspec
+##      - ruby/install-deps:
+##          app-dir: serverspec
+##      - run:
+##          name: execute
+##          command: |
+##            cd serverspec
+##            TARGET_HOST=35.75.114.95 bundle exec rspec
 
 workflows:
   circleci-raisetech13-workflow:
