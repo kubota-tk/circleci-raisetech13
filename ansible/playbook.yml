@@ -86,15 +86,6 @@
             repo: https://github.com/rbenv/ruby-build.git
             dest: /home/ec2-user/.rbenv/plugins/ruby-build
                   
-      # bundlerのインストール
-        - name: Install bundler gem
-          become: false
-          gem:
-            name: bundler
-            user_install: no
-            state: present
-            executable: "/home/ec2-user/.rbenv/shims/gem"   
-
     - name: Setup Node.js using nvm
       block:
         - name: Clone nvm repository
