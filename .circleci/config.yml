@@ -26,9 +26,12 @@ jobs:
       - checkout
       - add_ssh_keys:
           fingerprints:
-            - "SHA256:KmebBzMw0nhELVCkE1BHo6QJLls6fEfwjimMB2yKLN0"
+              - SHA256:4APf4NJL13bChPbwTm2HMczPqyR0phoKeCNUb1lEqDs
       - ansible-playbook/install:
           version: 2.10.7
+      - ansible-playbook/playbook:
+          playbook: ansible/playbook.yml
+          playbook-options: -u ec2-user -i ansible/inventory --private-key ~/.ssh/id_rsa
 
 workflows:
   circleci-raisetech13-workflow:
@@ -37,5 +40,4 @@ workflows:
       - execute-ansible:
           requires:
             - execute-cloudformation
-
 
