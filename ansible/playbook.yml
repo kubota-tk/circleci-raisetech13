@@ -7,6 +7,24 @@
         state: present
         lock_timeout: 180
 
-  roles:
-    - nginx
-
+    - name: Install necessary packages
+      yum:
+        name:
+          - make
+          - gcc-c++
+          - patch
+          - openssl-devel
+          - libyaml-devel
+          - libffi-devel
+          - libicu-devel
+          - libxml2
+          - libxslt
+          - libxml2-devel
+          - libxslt-devel
+          - zlib-devel
+          - readline-devel
+          - ImageMagick
+          - ImageMagick-devel
+          - epel-release
+          - nc
+        state: present #削除する場合はabsent
