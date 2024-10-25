@@ -87,7 +87,7 @@
             dest: /home/ec2-user/.rbenv/plugins/ruby-build
           
           # Ruby3.2.3のインストール
-        - name: Install and set Ruby v3.1.2 as default if not already
+        - name: Install and set Ruby v3.2.3 as default if not already
           shell: |
             source /home/ec2-user/.bash_profile
             if [[ $(rbenv global) != *3.2.3* ]]; then
