@@ -36,6 +36,7 @@ jobs:
   execute-serverspec:
     executor: ruby/default
     steps:
+      - checkout
       - ruby/install:
           version: 3.2.3
       - ruby/install-deps:
