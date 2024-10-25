@@ -1,0 +1,29 @@
+---
+- name: setup yum repository
+  ansible.builtin.yum_repository:
+   name: nginx-stable
+   description: nginx stable repo
+   file: nginx
+   baseurl: http://nginx.org/packages/amzn2/$releasever/$basearch/
+   gpgcheck: yes
+   enabled: yes
+   gpgkey: https://nginx.org/keys/nginx_signing.key
+   owner: root
+   group: root
+   mode: '0644'
+   state: present
+
+- name: Nginx Install
+  ansible.builtin.yum:
+    name: nginx
+    state: present
+    enablerepo: nginx-stable
+    lock_timeout: 180
+
+- name: Nginx Start
+  ansible.builtin.systemd:
+    name: nginx
+    enabled: yes
+    state: started
+  become: yes
+
