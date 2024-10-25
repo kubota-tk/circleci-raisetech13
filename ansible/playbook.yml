@@ -85,26 +85,13 @@
           git:
             repo: https://github.com/rbenv/ruby-build.git
             dest: /home/ec2-user/.rbenv/plugins/ruby-build
-          
-          # Ruby3.2.3のインストール
-        - name: Install and set Ruby v3.2.3 as default if not already
-          shell: |
-            source /home/ec2-user/.bash_profile
-            if [[ $(rbenv global) != *3.2.3* ]]; then
-              rbenv install 3.2.3
-              rbenv global 3.2.3
-            fi
-          args:
-            creates: /home/ec2-user/.rbenv/versions/3.2.3
-          async: 3600
-          poll: 10
-        
+                  
       # bundlerのインストール
         - name: Install bundler gem
           become: false
           gem:
             name: bundler
-            user_install: no
+            user_install: 
             state: present
             executable: "/home/ec2-user/.rbenv/shims/gem"   
 
