@@ -7,6 +7,11 @@
         state: present
         lock_timeout: 180
 
+    - name: Enable EPEL via amazon-linux-extras
+      command: amazon-linux-extras install epel -y
+      args:
+        creates: /etc/yum.repos.d/epel.repo
+    
     - name: Install necessary packages
       yum:
         name:
