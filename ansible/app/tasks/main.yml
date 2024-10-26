@@ -1,0 +1,8 @@
+---
+- name: git clone app
+  become: yes
+  git: 
+    repo: https://github.com/yuta-ushijima/raisetech-live8-sample-app
+    dest: /User/ec2-user/
+    force: yes
+ 

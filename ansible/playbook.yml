@@ -4,5 +4,6 @@
   roles:
     - yum
     - git
+    - app
     - mysql
 
