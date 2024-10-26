@@ -64,6 +64,7 @@
 
     # rbenvを使ったRubyのセットアップ
     - name: Setup ruby using rbenv
+    - become: yes
       block:
         - name: Clone rbenv repository
           git:
