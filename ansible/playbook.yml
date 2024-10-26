@@ -91,7 +91,7 @@
         - name: Clone nvm repository
           git:
             repo: https://github.com/nvm-sh/nvm.git           
-            dest: /home/ec2-user/.nvm
+            dest: /home/ec2-user/.nvm/test/fixtures/nvmrc
 
         - name: Update .bashrc for nvm
           lineinfile:
