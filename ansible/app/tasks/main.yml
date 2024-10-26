@@ -5,4 +5,5 @@
     repo: https://github.com/yuta-ushijima/raisetech-live8-sample-app.git
     dest: /home/ec2-user
     force: yes
+  register: git_clone
  
