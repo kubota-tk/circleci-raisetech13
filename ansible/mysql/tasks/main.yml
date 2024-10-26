@@ -17,22 +17,13 @@
     name: https://repo.mysql.com/mysql84-community-release-el7-1.noarch.rpm
     state: present
 
-- name: Install mysql-community-devel
+- name: Install mysql-community-devel,server,client
   become: yes
   yum:
-    name: mysql-community-devel
-    state: present
-
-- name: Install mysql-community-server
-  become: yes
-  yum:
-    name: mysql-community-server
-    state: present
-
-- name: Install mysql-community-client
-  become: yes
-  yum:
-    name: mysql-community-client
+    name:
+      - mysql-community-devel
+      - mysql-community-server
+      - mysql-community-client
     state: present
 
 - name: Start MySQL service
