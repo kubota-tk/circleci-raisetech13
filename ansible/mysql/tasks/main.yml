@@ -11,12 +11,11 @@
     name: mariadb*
     state: absent
 
-- name: Add the MySQL Yum repository to webserver's repository list
+- name: Add the MySQL from YumRepository
   become: yes
   yum:
-    name: add repo
-    command: rpm -ih https://repo.mysql.com/mysql84-community-release-el7-1.noarch.rpm creates=/tmp/mysql.rpm
-    state: present
+    name: https://repo.mysql.com/mysql84-community-release-el7-1.noarch.rpm
+    staite: present
 
 - name: Install mysql-community-devel
   become: yes
