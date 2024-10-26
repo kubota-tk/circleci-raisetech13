@@ -86,14 +86,6 @@
             repo: https://github.com/rbenv/ruby-build.git
             dest: /home/ec2-user/.rbenv/plugins/ruby-build
     
-          # yarnのグローバルインストール
-        - name: Install yarn globally
-          become: false
-          npm:
-            name: yarn
-            global: yes
-            state: present
-
     # Nginxのインストール
     - name: Install Nginx
       yum:
