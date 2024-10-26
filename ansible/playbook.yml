@@ -85,35 +85,7 @@
           git:
             repo: https://github.com/rbenv/ruby-build.git
             dest: /home/ec2-user/.rbenv/plugins/ruby-build
-                  
-    - name: Setup Node.js using nvm
-      block:
-        - name: Clone nvm repository
-          git:
-            repo: https://github.com/nvm-sh/nvm.git           
-            dest: /home/ec2-user/.nvm/test/fixtures/nvmrc
-
-        - name: Update .bashrc for nvm
-          lineinfile:
-            path: /home/ec2-user/.bashrc
-            line: "{{ item }}"
-          with_items:
-            - 'export NVM_DIR="$HOME/.nvm"'
-            - '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"'
-            - '[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"'
-        
-        - name: Install and set Node.js v17.9.1 as default if not already
-          shell: |
-           source /home/ec2-user/.bashrc
-            if [[ $(nvm alias default) != *v17.9.1* ]]; then
-              nvm install v17.9.1
-              nvm alias default v17.9.1
-            fi
-          args:
-            creates: /home/ec2-user/.nvm/versions/node/v17.9.1
-          async: 3600
-          poll: 10
-     
+    
           # yarnのグローバルインストール
         - name: Install yarn globally
           become: false
