@@ -3,6 +3,6 @@
   become: yes
   git: 
     repo: https://github.com/yuta-ushijima/raisetech-live8-sample-app
-    dest: /User/ec2-user/
+    dest: /home/ec2-user/
     force: yes
  
