@@ -15,7 +15,7 @@
   become: yes
   yum:
     name: https://repo.mysql.com/mysql84-community-release-el7-1.noarch.rpm
-    staite: present
+    state: present
 
 - name: Install mysql-community-devel
   become: yes
