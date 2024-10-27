@@ -1,7 +1,5 @@
 ---
-# ------------------------------------------------------------#
-#  rbenv
-# ------------------------------------------------------------#
+##  rbenv Install
 - name: check rbenv install
   shell: bash -lc "rbenv --version"
   register: rbenv_installed
@@ -36,9 +34,7 @@
     dest: /home/ec2-user/.rbenv/plugins/ruby-build
   when: rbenv_installed is failed
 
-# ------------------------------------------------------------#
-#  Ruby
-# ------------------------------------------------------------#
+##  Ruby Install
 - name: check ruby install
   shell: bash -lc "rbenv version | grep 3.2.3"
   register: ruby_installed
