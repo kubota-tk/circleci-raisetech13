@@ -39,18 +39,18 @@
 ##  Ruby Install
 - name: check ruby install
   become: yes
-  shell: bash -lc "rbenv version | grep 3.2.3"
+  shell: bash -lc "rbenv version | grep 3.2.5"
   register: ruby_installed
   changed_when: no
   ignore_errors: yes
 
 - name: install ruby
   become: yes
-  shell: bash -lc "rbenv install 3.2.3"
+  shell: bash -lc "rbenv install 3.2.5"
   when: ruby_installed is failed
 
 - name: set default ruby version
   become: yes
-  shell: bash -lc "rbenv global 3.2.3"
+  shell: bash -lc "rbenv global 3.2.5"
   when: ruby_installed is failed
 
