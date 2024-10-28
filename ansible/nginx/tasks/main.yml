@@ -1,0 +1,13 @@
+---
+# Nginxのインストール
+- name: Install Nginx
+  yum:
+    name: nginx
+    state: present
+
+- name: Ensure Nginx is started and enabled on boot
+  systemd:
+    name: nginx
+    state: started
+    enabled: true
+
