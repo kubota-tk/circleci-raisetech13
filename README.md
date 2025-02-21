@@ -7,3 +7,6 @@
 3. 最初のjobとしてCloudformationを実行
 4. ２番目のjobとしてAnsibleを実行（Cloudformationをトリガー）
 5. ３番目のjobとしてServerspecを実行（Ansibleをトリガー）
+
+## 自動化がわかる図
+  ![図](images/raise-lec13.jpg)
