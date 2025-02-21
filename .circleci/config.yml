@@ -45,7 +45,7 @@ jobs:
           name: execute
           command: |
             cd serverspec
-            TARGET_HOST=35.75.114.95 bundle exec rspec
+            TARGET_HOST=54.64.64.240 bundle exec rspec
 
 workflows:
   circleci-raisetech13-workflow:
